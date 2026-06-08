@@ -1,0 +1,41 @@
+@page
+@model SistemaDeTurnosWeb.Pages.Servicios.CreateModel
+@{
+    ViewData["Title"] = "Nuevo Servicio";
+}
+
+<h1><i class="bi bi-plus-circle"></i> Nuevo Servicio</h1>
+
+<form method="post" class="mt-4">
+    <div class="card">
+        <div class="card-body">
+            <div class="mb-3">
+                <label asp-for="Servicio.Nombre" class="form-label">Nombre del servicio</label>
+                <input asp-for="Servicio.Nombre" class="form-control" required />
+                <span asp-validation-for="Servicio.Nombre" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Servicio.DuracionEnMinutos" class="form-label">Duración (minutos)</label>
+                    <input asp-for="Servicio.DuracionEnMinutos" class="form-control" type="number" min="5" required />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Servicio.Precio" class="form-label">Precio ($)</label>
+                    <input asp-for="Servicio.Precio" class="form-control" type="number" min="0" step="0.01" required />
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save"></i> Guardar
+            </button>
+            <a asp-page="Index" class="btn btn-secondary">
+                <i class="bi bi-x-lg"></i> Cancelar
+            </a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

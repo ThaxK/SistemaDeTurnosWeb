@@ -1,0 +1,56 @@
+@page
+@model SistemaDeTurnosWeb.Pages.Turnos.CreateModel
+@{
+    ViewData["Title"] = "Nuevo Turno";
+}
+
+<h1><i class="bi bi-calendar-plus"></i> Nuevo Turno</h1>
+
+@if (!string.IsNullOrEmpty(Model.Error))
+{
+    <div class="alert alert-danger">
+        <i class="bi bi-exclamation-triangle"></i> @Model.Error
+    </div>
+}
+
+<form method="post" class="mt-4">
+    <div class="card">
+        <div class="card-body">
+            <div class="mb-3">
+                <label asp-for="Turno.ClienteId" class="form-label">Cliente</label>
+                <select asp-for="Turno.ClienteId" asp-items="Model.ClientesList" class="form-select" required>
+                    <option value="">— Seleccionar cliente —</option>
+                </select>
+                <span asp-validation-for="Turno.ClienteId" class="text-danger"></span>
+                <small class="text-muted">
+                    <a asp-page="/Clientes/Create">+ Registrar nuevo cliente</a>
+                </small>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Turno.ServicioId" class="form-label">Servicio</label>
+                <select asp-for="Turno.ServicioId" asp-items="Model.ServiciosList" class="form-select" required>
+                    <option value="">— Seleccionar servicio —</option>
+                </select>
+                <span asp-validation-for="Turno.ServicioId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Turno.FechaHora" class="form-label">Fecha y hora</label>
+                <input asp-for="Turno.FechaHora" class="form-control" type="datetime-local"
+                       min="@DateTime.Today.ToString("yyyy-MM-dd")T00:00" required />
+                <span asp-validation-for="Turno.FechaHora" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save"></i> Crear turno
+            </button>
+            <a asp-page="Index" class="btn btn-secondary">
+                <i class="bi bi-x-lg"></i> Cancelar
+            </a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

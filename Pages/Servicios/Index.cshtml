@@ -1,0 +1,39 @@
+@page
+@model SistemaDeTurnosWeb.Pages.Servicios.IndexModel
+@{
+    ViewData["Title"] = "Servicios";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1><i class="bi bi-tools"></i> Servicios</h1>
+    <a asp-page="Create" class="btn btn-primary">
+        <i class="bi bi-plus-lg"></i> Nuevo servicio
+    </a>
+</div>
+
+@if (Model.Servicios.Any())
+{
+    <div class="row g-3">
+        @foreach (var servicio in Model.Servicios)
+        {
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@servicio.Nombre</h5>
+                        <p class="card-text">
+                            <span class="badge bg-info"><i class="bi bi-clock"></i> @servicio.DuracionEnMinutos min</span>
+                            <span class="badge bg-success"><i class="bi bi-currency-dollar"></i> $@servicio.Precio.ToString("N0")</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        <i class="bi bi-info-circle"></i> No hay servicios registrados.
+        <a asp-page="Create">Crear el primer servicio</a>
+    </div>
+}

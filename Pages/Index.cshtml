@@ -1,0 +1,102 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h1 class="mb-4"><i class="bi bi-scissors"></i> Panel de Control</h1>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="card border-primary h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-tools display-4 text-primary"></i>
+                <h5 class="card-title mt-2">Servicios</h5>
+                <p class="display-6 fw-bold text-primary">@Model.TotalServicios</p>
+            </div>
+            <div class="card-footer text-center">
+                <a asp-page="/Servicios/Create" class="btn btn-sm btn-outline-primary">Agregar</a>
+                <a asp-page="/Servicios/Index" class="btn btn-sm btn-outline-secondary">Ver</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-success h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-people display-4 text-success"></i>
+                <h5 class="card-title mt-2">Clientes</h5>
+                <p class="display-6 fw-bold text-success">@Model.TotalClientes</p>
+            </div>
+            <div class="card-footer text-center">
+                <a asp-page="/Clientes/Create" class="btn btn-sm btn-outline-success">Agregar</a>
+                <a asp-page="/Clientes/Index" class="btn btn-sm btn-outline-secondary">Ver</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-warning h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-clock-history display-4 text-warning"></i>
+                <h5 class="card-title mt-2">Pendientes</h5>
+                <p class="display-6 fw-bold text-warning">@Model.TurnosPendientes</p>
+            </div>
+            <div class="card-footer text-center">
+                <a asp-page="/Turnos/Index" class="btn btn-sm btn-outline-warning">Ver turnos</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-info h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-calendar-day display-4 text-info"></i>
+                <h5 class="card-title mt-2">Turnos Hoy</h5>
+                <p class="display-6 fw-bold text-info">@Model.TurnosHoy</p>
+            </div>
+            <div class="card-footer text-center">
+                <a asp-page="/Turnos/Create" class="btn btn-sm btn-outline-info">Nuevo turno</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.ProximosTurnos.Any())
+{
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0"><i class="bi bi-list-ol"></i> Próximos turnos</h5>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Servicio</th>
+                        <th>Fecha y Hora</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var turno in Model.ProximosTurnos)
+                    {
+                        <tr>
+                            <td>@turno.ClienteNombre</td>
+                            <td>@turno.ServicioNombre</td>
+                            <td>@turno.FechaHora.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>
+                                <span class="badge @(turno.Estado == EstadoTurno.Pendiente ? "bg-warning" : "bg-success")">
+                                    @turno.Estado
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        <i class="bi bi-info-circle"></i> No hay turnos próximos. <a asp-page="/Turnos/Create">Crear el primer turno</a>
+    </div>
+}

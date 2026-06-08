@@ -1,0 +1,81 @@
+@SistemaDeTurnosWeb_HostAddress = http://localhost:5207
+
+### Listar servicios disponibles
+GET {{SistemaDeTurnosWeb_HostAddress}}/api/servicios
+Accept: application/json
+
+### Crear nuevo servicio
+POST {{SistemaDeTurnosWeb_HostAddress}}/api/servicios
+Content-Type: application/json
+
+{
+  "nombre": "Corte infantil",
+  "duracionEnMinutos": 25,
+  "precio": 1000
+}
+
+### Crear cliente
+POST {{SistemaDeTurnosWeb_HostAddress}}/api/clientes
+Content-Type: application/json
+
+{
+  "nombre": "Juan Pérez",
+  "telefono": "555-1234"
+}
+
+### Crear cliente sin teléfono
+POST {{SistemaDeTurnosWeb_HostAddress}}/api/clientes
+Content-Type: application/json
+
+{
+  "nombre": "María García"
+}
+
+### Listar clientes
+GET {{SistemaDeTurnosWeb_HostAddress}}/api/clientes
+Accept: application/json
+
+### Crear turno (asume servicioId=1, clienteId=1)
+POST {{SistemaDeTurnosWeb_HostAddress}}/api/turnos
+Content-Type: application/json
+
+{
+  "servicioId": 1,
+  "clienteId": 1,
+  "fechaHora": "2026-06-10T15:00:00"
+}
+
+### Crear otro turno
+POST {{SistemaDeTurnosWeb_HostAddress}}/api/turnos
+Content-Type: application/json
+
+{
+  "servicioId": 2,
+  "clienteId": 2,
+  "fechaHora": "2026-06-10T16:30:00"
+}
+
+### Listar turnos
+GET {{SistemaDeTurnosWeb_HostAddress}}/api/turnos
+Accept: application/json
+
+### Obtener turno por ID
+GET {{SistemaDeTurnosWeb_HostAddress}}/api/turnos/1
+Accept: application/json
+
+### Obtener turno inexistente (debe dar 404)
+GET {{SistemaDeTurnosWeb_HostAddress}}/api/turnos/999
+Accept: application/json
+
+### Cancelar turno
+DELETE {{SistemaDeTurnosWeb_HostAddress}}/api/turnos/1
+
+### Crear turno con servicio inexistente (debe dar 400)
+POST {{SistemaDeTurnosWeb_HostAddress}}/api/turnos
+Content-Type: application/json
+
+{
+  "servicioId": 999,
+  "clienteId": 1,
+  "fechaHora": "2026-06-10T17:00:00"
+}

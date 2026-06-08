@@ -1,0 +1,55 @@
+@page
+@model SistemaDeTurnosWeb.Pages.Clientes.IndexModel
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1><i class="bi bi-people"></i> Clientes</h1>
+    <a asp-page="Create" class="btn btn-success">
+        <i class="bi bi-plus-lg"></i> Nuevo cliente
+    </a>
+</div>
+
+@if (Model.Clientes.Any())
+{
+    <div class="card">
+        <div class="card-body p-0">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Teléfono</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var cliente in Model.Clientes)
+                    {
+                        <tr>
+                            <td>@cliente.Id</td>
+                            <td>@cliente.Nombre</td>
+                            <td>
+                                @if (string.IsNullOrEmpty(cliente.Telefono))
+                                {
+                                    <span class="text-muted">—</span>
+                                }
+                                else
+                                {
+                                    @cliente.Telefono
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        <i class="bi bi-info-circle"></i> No hay clientes registrados.
+        <a asp-page="Create">Registrar el primer cliente</a>
+    </div>
+}
