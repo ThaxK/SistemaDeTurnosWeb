@@ -1,7 +1,9 @@
 # ✂️ Barbería Turnos — Sistema de Gestión de Turnos
 
+![Build status](https://github.com/ThaxK/SistemaDeTurnosWeb/actions/workflows/feature-a%C3%B1adir-proyecto-base_sistemadeturnosweb.yml/badge.svg)
+
 API REST + UI Web para gestionar turnos de una barbería o peluquería.  
-Construida con **.NET 9** y almacenamiento **en memoria**. Ideal como base para proyectos CI/CD.
+Construida con **.NET 9** y almacenamiento **en memoria**. Desplegada en **Azure Web Apps** con CI/CD via GitHub Actions.
 
 ---
 
@@ -31,7 +33,7 @@ docker run -d -p 8080:8080 --name barberia barberia-api
 | `/` | Dashboard con resumen de turnos, clientes y servicios |
 | `/Servicios` | Listado y creación de servicios |
 | `/Clientes` | Listado y registro de clientes |
-| `/Turnos` | Listado, creación y cancelación de turnos |
+| `/Turnos` | Listado, creación, cancelación y realización de turnos |
 | `/Turnos/Create` | Formulario para nuevo turno |
 
 ## 🔌 API REST
@@ -57,6 +59,22 @@ Ejemplos de requests en [`SistemaDeTurnosWeb.http`](SistemaDeTurnosWeb.http).
 - **Bootstrap 5** + Bootstrap Icons — UI responsive
 - **ConcurrentDictionary** — almacenamiento en memoria (thread-safe)
 - **Docker** — imagen multi-stage lista para deploy
+- **Azure Web Apps** — hosting en la nube
+- **GitHub Actions** — CI/CD automatizado
+
+---
+
+## 🤖 CI/CD
+
+El proyecto tiene un pipeline de **GitHub Actions** que:
+
+1. **Build** — `dotnet build --configuration Release`
+2. **Publish** — `dotnet publish -c Release`
+3. **Deploy** — a **Azure Web App** (`SistemaDeTurnosWeb`)
+
+El workflow se ejecuta automáticamente al pushear a la branch `feature/añadir-proyecto-base`.
+
+Workflow: [`.github/workflows/feature-añadir-proyecto-base_sistemadeturnosweb.yml`](.github/workflows/feature-a%C3%B1adir-proyecto-base_sistemadeturnosweb.yml)
 
 ---
 
@@ -64,6 +82,7 @@ Ejemplos de requests en [`SistemaDeTurnosWeb.http`](SistemaDeTurnosWeb.http).
 
 ```
 SistemaDeTurnosWeb/
+├── .github/workflows/ → CI/CD pipeline (GitHub Actions)
 ├── Controllers/       → API REST endpoints
 ├── Models/            → Cliente, Servicio, Turno
 ├── Repositories/      → Almacenamiento en memoria
@@ -79,8 +98,8 @@ SistemaDeTurnosWeb/
 
 ## 🚧 Próximos pasos
 
+- [x] Pipeline CI/CD (GitHub Actions → Azure Web Apps)
 - [ ] Test project con xUnit
-- [ ] Pipeline CI/CD (GitHub Actions / Azure DevOps)
 - [ ] Frontend en React / Blazor
 - [ ] Persistencia con base de datos
 
